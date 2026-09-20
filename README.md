@@ -9,9 +9,12 @@ dependencies. Real Madrid white and gold on near-black, Anton for display type.
 index.html          the page
 style.css           all styling; every colour and measure is a token at the top
 script.js           the year, the nav border, and the scroll fade-in
-images/irtaza.jpg   portrait (900×1125, EXIF stripped)
-images/irtaza.webp  the same portrait, ~55% smaller, served first
+images/irtaza.*     hero portrait (900×1125, EXIF stripped)
+images/pitch.*      Real Madrid render, in "On the pitch"
+images/engineer.*   AI workstation render, in "The lab"
 ```
+
+Each image ships as WebP with a JPEG fallback; the browser picks the WebP.
 
 ## Run it locally
 
@@ -31,6 +34,18 @@ Search `index.html` for `EDIT ME`. Two things are placeholders:
   Replace the `href`s, or delete the `<li>`s you don't use.
 
 Everything else is real content.
+
+## The two renders are labelled, on purpose
+
+`images/pitch.*` and `images/engineer.*` are generated images, not
+photographs. Both carry a **The vision** badge, a caption saying they are
+rendered, and alt text that says the same thing.
+
+That is not decoration. The Bernabéu shot puts a real 13-year-old in a Real
+Madrid first-team kit on a stadium pitch, and an unlabelled copy on a public
+portfolio reads as a claim that he plays for the club. Labelled, it reads as
+ambition — which is what it is, and which is the better look anyway. If you
+restyle the page, keep the badge, the caption and the alt text.
 
 ## Changing it
 

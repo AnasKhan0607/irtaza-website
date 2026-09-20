@@ -325,12 +325,79 @@ h2 {
   font-size: 0.8125rem; color: var(--muted);
 }
 
+/* ------------------------------- feature --------------------------------- */
+/* A rendered image beside the content it illustrates. `.rev` puts the image
+   second on wide screens; on narrow ones both stack image-last either way. */
+
+.feature {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 62rem) {
+  .feature { grid-template-columns: 0.9fr 1.1fr; align-items: center; }
+  .feature.rev { grid-template-columns: 1.3fr 0.7fr; }
+  /* Three cards in a column wide enough for two orphan the third on its own
+     row. Stacked, they run the same height as the figure beside them. */
+  .feature.rev .cards { grid-template-columns: 1fr; }
+}
+
+.shot { position: relative; margin: 0; }
+.shot picture { position: relative; display: block; }
+.shot img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  filter: contrast(1.04) saturate(0.96);
+}
+/* Same gold wash as the hero portrait, so a warm render sits in a cold page.
+   It lives on `picture`, not the figure — on the figure an inset:0 overlay
+   would sit on top of the caption too. */
+.shot picture::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--bg) 55%, transparent) 100%),
+    linear-gradient(135deg, color-mix(in srgb, var(--gold) 11%, transparent), transparent 55%);
+  pointer-events: none;
+}
+
+.shot .tag {
+  position: absolute; z-index: 2; top: 0.9rem; left: 0.9rem;
+  padding: 0.3rem 0.8rem;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gold-dim);
+  border-radius: 999px;
+  font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* These are renders, not photographs, and the caption says so rather than
+   letting a kit and a stadium imply something that has not happened. */
+.shot figcaption {
+  margin-top: 0.85rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+
 /* -------------------------------- stats --------------------------------- */
 
 .stats {
   display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
 }
+/* Beside a figure the column is narrow enough that auto-fit lands on three
+   and leaves a fourth card orphaned on its own row. Pin it to a 2x2. */
+.feature .stats { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 26rem) { .feature .stats { grid-template-columns: 1fr; } }
+
 .stat {
   padding: 1.75rem;
   background: var(--raise);
