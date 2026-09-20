@@ -103,21 +103,17 @@
   /* ------------------------------------------- scroll: nav, progress, rail */
   var nav = document.querySelector('.nav');
   var bar = document.getElementById('progress-bar');
-  var rail = document.getElementById('plan');
-  var railTrack = document.getElementById('rail-track');
-  var railBar = document.getElementById('rail-bar');
-  var railPin = rail ? rail.querySelector('.rail-pin') : null;
+  var steps = document.getElementById('steps');
+  var stepEls = steps ? steps.querySelectorAll('.step') : [];
 
-  /* Pure, so it can be tested without a browser: how far the rail track has
-     travelled at a given scroll position. Clamped at both ends, and a track
-     narrower than the viewport travels zero rather than a negative amount. */
-  function railOffset(y, top, height, viewportH, trackW, viewportW) {
-    var span = height - viewportH;
-    var p = span > 0 ? (y - top) / span : 0;
-    p = p < 0 ? 0 : p > 1 ? 1 : p;
-    var travel = trackW - viewportW;
-    if (travel < 0) travel = 0;
-    return { p: p, x: -travel * p };
+  /* Pure, so it can be tested without a browser: how full the timeline's line
+     should be, given the list's position in the viewport. It starts filling
+     when the list top passes 72% down the screen and completes when its
+     bottom passes the same point. Clamped at both ends. */
+  function fillProgress(top, height, viewportH) {
+    if (height <= 0) return 0;
+    var p = (viewportH * 0.72 - top) / height;
+    return p < 0 ? 0 : p > 1 ? 1 : p;
   }
 
   /* The usual `if (ticking) return` guard wedges permanently if the rAF it
@@ -155,11 +151,16 @@
       // The rail only runs while CSS has actually pinned it. Below the
       // breakpoint, and under reduced motion, the stylesheet makes it a
       // normal stack and this must not touch the transform.
-      if (railTrack && railPin && getComputedStyle(railPin).position === 'sticky') {
-        var r = railOffset(y, rail.offsetTop, rail.offsetHeight, window.innerHeight,
-                           railTrack.scrollWidth, window.innerWidth);
-        railTrack.style.transform = 'translate3d(' + r.x + 'px,0,0)';
-        if (railBar) railBar.style.transform = 'scaleX(' + r.p + ')';
+      if (steps) {
+        var box = steps.getBoundingClientRect();
+        var fill = fillProgress(box.top, box.height, window.innerHeight);
+        steps.style.setProperty('--fill', fill);
+        // Light each dot once the fill has reached it.
+        for (var s = 0; s < stepEls.length; s++) {
+          var el = stepEls[s];
+          var at = box.height > 0 ? (el.offsetTop + 8) / box.height : 0;
+          el.classList.toggle('on', fill >= at);
+        }
       }
     }
   }
@@ -258,7 +259,13 @@
       raf = visible ? requestAnimationFrame(loop) : null;
     }
 
+    // Stop the browser starting a text selection or lifting a drag image of
+    // the photo out of the page; neither is prevented by the other.
+    el.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    el.addEventListener('selectstart', function (e) { e.preventDefault(); });
+
     el.addEventListener('pointerdown', function (e) {
+      e.preventDefault();
       dragging = true; moved = 0;
       lastX = e.clientX; lastY = e.clientY;
       el.classList.add('dragging');

@@ -1,7 +1,7 @@
 # irtaza-website
 
-Portfolio site for **Irtaza Javed** — grade 8, centre-back, teaching himself
-the computer science behind machine learning.
+Portfolio site for **Irtaza Javed** — grade 8, aspiring AI software engineer,
+right back, Real Madrid fan.
 
 Static: three files and three images. No framework, no build step, no
 dependencies. One typeface (Inter), one accent, used sparingly. Dark and
@@ -68,7 +68,7 @@ touch-only pointer where it would misfire.
 | Thing | How |
 |---|---|
 | The slab | A real box in CSS 3D — two faces and four side panels. Drag to spin, momentum on release, then a slow idle rotation. |
-| Horizontal rail | The plan section pins and its track translates with scroll progress. |
+| Timeline fill | The plan's line fills and its dots light as you scroll past them. |
 | Spotlight | Panels track the pointer and paint a radial gradient from `--mx`/`--my`. |
 | Tilt | Pointer-driven `rotateX`/`rotateY` on the portrait and panels. |
 | Magnetic | Buttons and the email drift toward the cursor. |
@@ -79,28 +79,25 @@ Three things worth knowing before changing any of it:
 - **The slab is sized from `--cw`/`--ch`/`--cd`**, so every `translateZ` is a
   `calc()` off the same numbers. No JS measuring, correct at every width.
   Change the size in one place.
-- **`.stop` width has a `vw` term on purpose.** At a fixed rem width the track
-  is barely wider than a large monitor, so the rail travelled ~200px over three
-  screens of scrolling and read as broken.
+- **Dragging the slab needs three separate switches.** `user-select` on the
+  box, `-webkit-user-drag` plus `draggable="false"` on the images, and
+  `preventDefault()` on `pointerdown`/`dragstart`. None of them covers the
+  others: miss one and the drag either selects the text around the panel or
+  lifts a ghost of the photo out of the page.
 - **The scroll handler's rAF guard has a timeout release.** The usual
   `if (ticking) return` pattern wedges permanently if that frame never runs.
 - **Word-wipe spans clip descenders.** `overflow: hidden` is what makes it a
   wipe; the clip box is extended with `padding-bottom` and pulled back with a
   matching negative margin.
 
-`railOffset()` in `script.js` is pure and has a Node test — see the commit.
+`fillProgress()` in `script.js` is pure and has a Node test — see the commit.
 
-## The two renders are labelled, on purpose
+## The two renders
 
 `images/pitch.*` and `images/engineer.*` are generated images, not
-photographs. Both carry an **Illustration** badge, a caption saying
-"An illustration, not a photograph", and alt text that says the same.
-
-That is not decoration. The Bernabéu shot puts a real 13-year-old in a Real
-Madrid first-team kit on a stadium pitch, and an unlabelled copy on a public
-portfolio reads as a claim that he plays for the club. Labelled, it reads as
-ambition — which is what it is, and which is the better look anyway. If you
-restyle the page, keep the badge, the caption and the alt text.
+photographs. The visible badge and caption were removed at Irtaza's request.
+Their **alt text still describes them as illustrations**, which is what a
+screen reader and an image search read, and it costs the design nothing.
 
 ## Changing it
 

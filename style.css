@@ -244,7 +244,7 @@ h2 {
    calc() off the same numbers — no JS measuring, and it stays correct at
    every viewport because the clamp lives in one place. */
 .stage {
-  --cw: clamp(14rem, 33vw, 20rem);
+  --cw: clamp(16.5rem, 41vw, 27rem);
   --ch: calc(var(--cw) * 1.25);
   --cd: 26px;
   perspective: 1400px;
@@ -264,6 +264,17 @@ h2 {
   cursor: grab;
   touch-action: pan-y;               /* vertical scrolling still works on it */
   will-change: transform;
+  /* Dragging a box that contains images otherwise selects the text around it
+     and lifts a ghost of the photo out of the page. Three separate browser
+     behaviours have to be switched off, and none of them covers the others. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.slab img {
+  -webkit-user-drag: none;
+  user-select: none; -webkit-user-select: none;
+  pointer-events: none;              /* the drag is handled by .slab itself */
 }
 .slab.dragging { cursor: grabbing; }
 
@@ -280,18 +291,6 @@ h2 {
 .slab .front { transform: translateZ(calc(var(--cd) / 2)); }
 .slab .back  { transform: rotateY(180deg) translateZ(calc(var(--cd) / 2)); }
 
-.face-tag, .face-name { position: absolute; z-index: 2; font-size: 0.6875rem; font-weight: 500; }
-.face-tag {
-  top: 0.7rem; left: 0.7rem; padding: 0.22rem 0.6rem;
-  background: color-mix(in srgb, var(--bg) 76%, transparent);
-  backdrop-filter: blur(6px);
-  border: 1px solid var(--line-2); border-radius: 5px; color: var(--muted);
-}
-.face-name {
-  bottom: 0.7rem; left: 0.7rem; padding: 0.25rem 0.65rem;
-  background: var(--accent); color: var(--bg);
-  border-radius: 5px; font-size: 0.75rem; font-weight: 600;
-}
 
 /* The four sides that make it a solid object rather than two planes. */
 .slab .edge { background: linear-gradient(180deg, var(--line-2), var(--line)); }
@@ -304,7 +303,6 @@ h2 {
 .slab .edge.top    { transform: rotateX(90deg)  translateZ(calc(var(--ch) / 2)); }
 .slab .edge.bottom { transform: rotateX(-90deg) translateZ(calc(var(--ch) / 2)); }
 
-.stage-note { margin: 0; font-size: 0.8125rem; color: var(--muted); }
 
 /* -------------------------------- panels --------------------------------- */
 
@@ -347,48 +345,36 @@ h2 {
 .mini strong { display: block; font-size: 0.9375rem; font-weight: 600; }
 .mini span { display: block; font-size: 0.9375rem; color: var(--muted); }
 
-/* --------------------------- the horizontal rail -------------------------- */
+/* ------------------------------- the steps -------------------------------- */
 
-.rail { position: relative; height: 300vh; border-top: 1px solid var(--line); background: var(--bg-alt); }
-.rail-pin {
-  position: sticky; top: 0; height: 100svh;
-  display: flex; flex-direction: column; justify-content: center; gap: clamp(1.5rem, 4vh, 3rem);
-  overflow: hidden;
+.steps { position: relative; margin: 0; padding: 0 0 0 2.25rem; list-style: none; }
+
+/* Two lines in the same place: a static track, and a gold fill whose scaleY
+   the script drives from scroll position. One element cannot do both, because
+   the fill has to be transformable independently of the track. */
+.steps::before, .steps::after {
+  content: ""; position: absolute; left: 0; top: 0.65rem; bottom: 0.65rem; width: 2px; border-radius: 2px;
 }
-.rail-head h2 { margin-bottom: 0; }
-.rail-track { display: flex; gap: clamp(1rem, 2vw, 1.5rem); padding-inline: var(--pad); will-change: transform; }
-
-/* Card width is viewport-relative on purpose. At a fixed rem width the track
-   is barely wider than a large monitor, so the rail travels a couple of
-   hundred pixels over three screens of scrolling and reads as broken. A vw
-   term keeps the travel proportional at every width. */
-.stop {
-  flex: none;
-  width: clamp(19rem, 34vw, 28rem);
-  padding: clamp(1.5rem, 3vw, 2rem);
-  background: var(--raise);
-  border: 1px solid var(--line);
-  border-radius: 16px;
+.steps::before { background: var(--line-2); }
+.steps::after {
+  background: var(--accent);
+  transform: scaleY(var(--fill, 0)); transform-origin: 50% 0;
 }
-.stop.last { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
-.stop .age { display: block; margin-bottom: 0.5rem; font-size: 0.8125rem; color: var(--accent); }
-.stop h3 { margin: 0 0 0.5rem; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.018em; }
-.stop p { margin: 0; font-size: 0.9375rem; color: var(--muted); }
 
-.rail-progress { height: 2px; margin-inline: var(--pad); background: var(--line); border-radius: 2px; }
-.rail-progress i { display: block; height: 100%; width: 100%; background: var(--accent); border-radius: 2px; transform: scaleX(0); transform-origin: 0 50%; }
-
-/* Below the breakpoint the rail becomes an ordinary stack. The script checks
-   the pin's computed `position` and does nothing while this is in force. */
-@media (max-width: 62rem), (prefers-reduced-motion: reduce) {
-  .rail { height: auto; padding-block: var(--band); }
-  .rail-pin { position: static; height: auto; overflow: visible; }
-  .rail-track { flex-direction: column; transform: none !important; padding-inline: 0; }
-  .rail-head { padding-inline: 0; }
-  .rail-pin > .wrap, .rail-track, .rail-progress { max-width: var(--wrap); margin-inline: auto; width: 100%; padding-inline: var(--pad); }
-  .stop { width: auto; }
-  .rail-progress { display: none; }
+.step { position: relative; padding-bottom: 2.75rem; }
+.step:last-child { padding-bottom: 0; }
+.step::before {
+  content: ""; position: absolute; left: -2.25rem; top: 0.6rem; translate: -4px 0;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--bg-alt); border: 2px solid var(--line-2);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
+.step.on::before { border-color: var(--accent); background: var(--accent); }
+.step.last.on::before { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 20%, transparent); }
+
+.step .age { display: block; margin-bottom: 0.35rem; font-size: 0.8125rem; color: var(--accent); }
+.step h3 { margin: 0 0 0.4rem; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.018em; }
+.step p { margin: 0; max-width: 40rem; color: var(--muted); }
 
 /* ------------------------------- contact --------------------------------- */
 
@@ -440,5 +426,6 @@ footer a:hover { color: var(--text); }
   [data-split] .w i { transform: none; transition: none; }
   .cue span, .grip::after { animation: none; }
   .slab { transform: rotateY(-18deg) rotateX(-5deg); }
+  .steps::after { transform: scaleY(1); }
   .spot::before { display: none; }
 }
