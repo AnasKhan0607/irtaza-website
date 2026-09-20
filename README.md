@@ -27,15 +27,15 @@ python3 -m http.server 8000
 Then open <http://localhost:8000>. Opening `index.html` from Finder works too,
 but a server is closer to how it will actually be served.
 
-## What still needs your details
+## Contact
 
-Search `index.html` for `EDIT ME`. Two things are placeholders:
+The contact section says **Coming soon** — there is no address and no social
+links on the site by design. When there is one, replace the
+`<p class="big soon up">` in `#contact` with a `mailto:` link and drop the
+`soon` class.
 
-- **the email** — currently `hello@example.com`, in the Contact section
-- **the social links** — GitHub, Instagram and YouTube all point at `#`.
-  Replace the `href`s, or delete the `<li>`s you don't use.
-
-Everything else is real content.
+`irtaza@irtazajaved.ca` is available free through Cloudflare Email Routing,
+forwarding to any inbox.
 
 ## Theming
 

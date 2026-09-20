@@ -381,10 +381,10 @@ h2 {
 .big { margin: 0 0 1.75rem; font-size: clamp(1.375rem, 3.6vw, 2.25rem); letter-spacing: -0.025em; word-break: break-word; }
 .big a { font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--line-2); display: inline-block; will-change: transform; }
 .big a:hover, .big a:focus-visible { color: var(--accent); border-color: var(--accent); }
+/* No address yet. Muted so it reads as a placeholder rather than as the
+   answer — full-strength text at this size looks like a finished statement. */
+.big.soon { color: var(--muted); margin-bottom: 0; }
 
-.social { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0; padding: 0; list-style: none; font-size: 0.9375rem; }
-.social a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.social a:hover, .social a:focus-visible { color: var(--text); }
 
 footer {
   border-top: 1px solid var(--line);
