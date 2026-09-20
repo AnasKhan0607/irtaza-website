@@ -135,8 +135,29 @@ magick images/irtaza.jpg -quality 82 images/irtaza.webp
 
 ## Deploying
 
-Any static host serves this as-is. GitHub Pages is the shortest path:
-**Settings → Pages → Source: Deploy from a branch → `main` / `root`**.
+Live at **<https://irtazajaved.ca>**, served by GitHub Pages from `main` / root.
+
+The `CNAME` file in the repo root is what tells GitHub which domain to answer
+for. **Deleting it unsets the custom domain**, so leave it alone.
+
+DNS is Cloudflare (`irtazajaved.ca`, account: Anas):
+
+| Record | Name | Value |
+|---|---|---|
+| A ×4 | `irtazajaved.ca` | `185.199.108–111.153` |
+| AAAA ×4 | `irtazajaved.ca` | `2606:50c0:800{0..3}::153` |
+| CNAME | `www` | `anaskhan0607.github.io` |
+
+**Every one of them is DNS-only — grey cloud, not orange — and that is
+deliberate.** GitHub issues its own Let's Encrypt certificate for the domain
+and validates over HTTP. With Cloudflare proxying, that validation never
+reaches GitHub, the certificate is never issued, and the site serves a
+certificate error that looks like a DNS problem.
+
+If you later want Cloudflare in front of it, turn the proxy on only *after*
+GitHub reports the certificate as issued, and make sure the zone's SSL mode is
+**Full** — never *Flexible*, which sends plaintext to an origin that redirects
+to HTTPS and gives an infinite redirect loop.
 
 ## License
 
