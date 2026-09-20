@@ -1,12 +1,16 @@
 # irtaza-website
 
-Personal website for Irtaza Javed. A static site — three files, no build step,
-no dependencies.
+Portfolio site for **Irtaza Javed** — grade 8, centre-back, future AI engineer.
+
+Static: three files and two images. No framework, no build step, no
+dependencies. Real Madrid white and gold on near-black, Anton for display type.
 
 ```
-index.html    the page
-style.css     all styling; the design tokens are at the top
-script.js     the year, the nav border, and the scroll fade-in
+index.html          the page
+style.css           all styling; every colour and measure is a token at the top
+script.js           the year, the nav border, and the scroll fade-in
+images/irtaza.jpg   portrait (900×1125, EXIF stripped)
+images/irtaza.webp  the same portrait, ~55% smaller, served first
 ```
 
 ## Run it locally
@@ -15,26 +19,51 @@ script.js     the year, the nav border, and the scroll fade-in
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>.
+Then open <http://localhost:8000>. Opening `index.html` from Finder works too,
+but a server is closer to how it will actually be served.
 
-Opening `index.html` directly from Finder works too, but a local server is
-closer to how it will actually be served.
+## What still needs your details
 
-## Editing it
+Search `index.html` for `EDIT ME`. Two things are placeholders:
 
-Everything marked `EDIT ME` in `index.html` is placeholder text:
+- **the email** — currently `hello@example.com`, in the Contact section
+- **the social links** — GitHub, Instagram and YouTube all point at `#`.
+  Replace the `href`s, or delete the `<li>`s you don't use.
 
-- the one-line intro under the name
-- the About paragraphs and the skill tags
-- the three project cards — name, one line, stack, and link
-- the email address and the three social links
+Everything else is real content.
 
-To restyle the whole site, change the tokens at the top of `style.css`
-(`--accent` is the gold; `--bg`, `--text` and `--muted` are the rest). A light
-theme is already defined and follows the visitor's system setting.
+## Changing it
 
-Adding a project is one more `<li class="card reveal">` block in the `#work`
-list — the grid reflows on its own.
+**Colours and spacing** are tokens at the top of `style.css`. `--gold` is the
+accent; `--bg`, `--white`, `--text` and `--muted` are the rest. Change them
+there and the whole page follows.
+
+**Adding a project** is one more `<li class="card reveal">` in the `#lab` list.
+**Adding a timeline step** is one more `<li class="reveal">` in `#plan` — add
+`class="reveal goal"` to make it the gold end-point. Both grids reflow on
+their own.
+
+**Swapping the photo**: replace both files in `images/`, keeping a roughly 4:5
+portrait. Strip the metadata first — phone photos carry GPS coordinates, and
+this repository is public:
+
+```bash
+magick new.jpg -auto-orient -strip -resize 900x1125^ -gravity center \
+  -extent 900x1125 -quality 86 images/irtaza.jpg
+magick images/irtaza.jpg -quality 82 images/irtaza.webp
+```
+
+## Notes
+
+- **Motion**: the ticker, the scroll cue and the fade-ins all stop under
+  `prefers-reduced-motion`. The fade-in also shows everything at once when
+  `IntersectionObserver` is missing — the failure mode of getting that wrong
+  is a blank page, so it fails toward visible.
+- **The ticker uses a per-item margin, not `gap`.** With `gap` the track is
+  `2 × copy + (n−1) × gap`, so the `-50%` loop lands half a gap off the seam
+  and visibly stutters once per cycle.
+- **`og:image` is a relative path.** Some link previews want an absolute URL —
+  once this has a domain, make it `https://<domain>/images/irtaza.jpg`.
 
 ## Deploying
 

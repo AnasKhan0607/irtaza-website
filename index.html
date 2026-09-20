@@ -3,119 +3,252 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Irtaza Javed</title>
-<meta name="description" content="Irtaza Javed — personal site.">
-<meta name="color-scheme" content="dark light">
+<title>Irtaza Javed — Defender. Builder.</title>
+<meta name="description" content="Irtaza Javed — grade 8, centre-back, and a future AI engineer. Real Madrid. CR7. Building something nobody has made yet.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080B">
 
-<meta property="og:title" content="Irtaza Javed">
-<meta property="og:description" content="Irtaza Javed — personal site.">
-<meta property="og:type" content="website">
+<meta property="og:title" content="Irtaza Javed — Defender. Builder.">
+<meta property="og:description" content="Grade 8. Centre-back. Future AI engineer. Building something nobody has made yet.">
+<meta property="og:image" content="images/irtaza.jpg">
+<meta property="og:type" content="profile">
+<meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>IJ</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23C8A44D'/><text x='16' y='24' font-family='Arial Black,sans-serif' font-size='21' font-weight='900' text-anchor='middle' fill='%2308080B'>7</text></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
 
-<header class="nav">
-  <a class="mark" href="#top" aria-label="Irtaza Javed, top of page">IJ</a>
+<header class="nav" id="top">
+  <a class="mark" href="#top"><span class="seven">7</span> IRTAZA</a>
   <nav aria-label="Primary">
     <a href="#about">About</a>
-    <a href="#work">Work</a>
-    <a href="#contact">Contact</a>
+    <a href="#pitch">Pitch</a>
+    <a href="#lab">Lab</a>
+    <a href="#plan">Plan</a>
+    <a class="nav-cta" href="#contact">Contact</a>
   </nav>
 </header>
 
 <main id="main">
 
-  <section class="hero" id="top">
-    <div class="wrap">
-      <p class="eyebrow reveal">Toronto, Canada</p>
-      <h1 class="reveal">Irtaza<br><em>Javed</em></h1>
-      <p class="lede reveal">
-        <!-- EDIT ME: one or two sentences. What you do, and who for. -->
-        I build things for the web — small, fast, and finished.
-      </p>
-      <div class="cta reveal">
-        <a class="btn" href="#work">See the work</a>
-        <a class="btn ghost" href="#contact">Get in touch</a>
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="halo" aria-hidden="true"></div>
+    <span class="watermark" aria-hidden="true">7</span>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Grade 8 · Centre-back · Future AI engineer</p>
+        <h1 class="reveal">
+          <span class="line">IRTAZA</span>
+          <span class="line outline">JAVED</span>
+        </h1>
+        <p class="lede reveal">
+          I defend like nobody gets past, and I build like nobody has built it yet.
+          Real Madrid on the weekend, computer science every other hour.
+        </p>
+        <div class="cta reveal">
+          <a class="btn" href="#plan">The plan</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+        </div>
       </div>
+
+      <figure class="portrait reveal">
+        <picture>
+          <source srcset="images/irtaza.webp" type="image/webp">
+          <img src="images/irtaza.jpg" width="900" height="1125"
+               alt="Irtaza Javed" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption><span>No.</span> 7</figcaption>
+      </figure>
     </div>
-    <div class="glow" aria-hidden="true"></div>
+
+    <a class="scroll-cue" href="#about" aria-label="Scroll to about">
+      <span aria-hidden="true"></span>
+    </a>
   </section>
 
+  <!-- ================= TICKER ================= -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>REAL MADRID</span><i>✦</i><span>CR7</span><i>✦</i><span>CENTRE-BACK</span><i>✦</i>
+      <span>AI ENGINEER</span><i>✦</i><span>GRADE 8</span><i>✦</i><span>HALA MADRID</span><i>✦</i>
+      <span>REAL MADRID</span><i>✦</i><span>CR7</span><i>✦</i><span>CENTRE-BACK</span><i>✦</i>
+      <span>AI ENGINEER</span><i>✦</i><span>GRADE 8</span><i>✦</i><span>HALA MADRID</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
   <section class="band" id="about">
     <div class="wrap two">
-      <h2 class="reveal">About</h2>
+      <div class="side reveal">
+        <span class="kicker">01</span>
+        <h2>About</h2>
+      </div>
       <div class="prose reveal">
-        <!-- EDIT ME -->
-        <p>
-          Short paragraph here. Where you are, what you are working on, and the
-          kind of problems you like. Two or three sentences is plenty — the
-          work below does the rest of the talking.
+        <p class="big-quote">
+          I'm 13, I play at the back, and I'm learning to build AI three years
+          before school gets around to teaching it.
         </p>
         <p>
-          A second paragraph, optional. Background, studies, or what you are
-          learning right now.
+          Most of what I know I taught myself. Computer science is the thing I
+          keep coming back to — not because it's assigned, but because it's the
+          only subject where you can think of something at night and have it
+          existing by morning.
+        </p>
+        <p>
+          The rest of my time goes to football. I'm a defender, which means the
+          job is simple and nobody claps for it: whatever the striker wants,
+          he doesn't get.
         </p>
         <ul class="tags">
-          <li>JavaScript</li>
           <li>Python</li>
-          <li>Design</li>
-          <li>Something else</li>
+          <li>Machine learning</li>
+          <li>Web</li>
+          <li>Football</li>
+          <li>Building things</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="band" id="work">
+  <!-- ================= PITCH ================= -->
+  <section class="band dark" id="pitch">
     <div class="wrap">
-      <h2 class="reveal">Work</h2>
+      <div class="head reveal">
+        <span class="kicker">02</span>
+        <h2>On the pitch</h2>
+        <p class="sub">Defending is a decision you make before the ball arrives.</p>
+      </div>
+
+      <ul class="stats">
+        <li class="stat reveal">
+          <span class="label">Position</span>
+          <strong class="value">CB</strong>
+          <span class="note">Centre-back. Last man, first read.</span>
+        </li>
+        <li class="stat reveal">
+          <span class="label">Club</span>
+          <strong class="value">RMA</strong>
+          <span class="note">Real Madrid. Hala Madrid y nada más.</span>
+        </li>
+        <li class="stat reveal">
+          <span class="label">The GOAT</span>
+          <strong class="value">CR7</strong>
+          <span class="note">Cristiano Ronaldo dos Santos Aveiro.</span>
+        </li>
+        <li class="stat reveal">
+          <span class="label">Getting past me</span>
+          <strong class="value">0</strong>
+          <span class="note">Strikers, ranked by how their night went.</span>
+        </li>
+      </ul>
+
+      <blockquote class="pull reveal">
+        <p>“Your love makes me strong. Your hate makes me unstoppable.”</p>
+        <cite>— Cristiano Ronaldo</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ================= LAB ================= -->
+  <section class="band" id="lab">
+    <div class="wrap">
+      <div class="head reveal">
+        <span class="kicker">03</span>
+        <h2>The lab</h2>
+        <p class="sub">What I'm building, and what I'm building toward.</p>
+      </div>
+
       <ul class="cards">
-
         <li class="card reveal">
-          <span class="num">01</span>
-          <h3>Project name</h3>
-          <p>One line on what it is and why it exists. Keep it concrete.</p>
+          <span class="num">AI</span>
+          <h3>Learning to build models</h3>
+          <p>
+            Python first, then the maths underneath it. I want to understand
+            why a model works, not just call something that already does.
+          </p>
+          <p class="meta">Python · Neural networks · In progress</p>
+        </li>
+        <li class="card reveal">
+          <span class="num">WEB</span>
+          <h3>This site</h3>
+          <p>
+            Hand-written HTML and CSS, no framework and no page builder.
+            You're looking at it.
+          </p>
           <p class="meta">HTML · CSS · JavaScript</p>
-          <a class="link" href="#">View project<span aria-hidden="true">→</span></a>
         </li>
-
         <li class="card reveal">
-          <span class="num">02</span>
-          <h3>Project name</h3>
-          <p>One line on what it is and why it exists. Keep it concrete.</p>
-          <p class="meta">React · Node</p>
-          <a class="link" href="#">View project<span aria-hidden="true">→</span></a>
+          <span class="num">???</span>
+          <h3>The one nobody has made</h3>
+          <p>
+            The actual goal. I don't want to rebuild something that exists with
+            a nicer interface — I want to make the thing that wasn't there.
+          </p>
+          <p class="meta">Coming</p>
         </li>
-
-        <li class="card reveal">
-          <span class="num">03</span>
-          <h3>Project name</h3>
-          <p>One line on what it is and why it exists. Keep it concrete.</p>
-          <p class="meta">Python</p>
-          <a class="link" href="#">View project<span aria-hidden="true">→</span></a>
-        </li>
-
       </ul>
     </div>
   </section>
 
-  <section class="band contact" id="contact">
+  <!-- ================= PLAN ================= -->
+  <section class="band dark" id="plan">
     <div class="wrap">
-      <h2 class="reveal">Contact</h2>
+      <div class="head reveal">
+        <span class="kicker">04</span>
+        <h2>The plan</h2>
+        <p class="sub">Written down, so it's a target and not a daydream.</p>
+      </div>
+
+      <ol class="timeline">
+        <li class="reveal">
+          <span class="when">Now — 13</span>
+          <h3>Learn the fundamentals properly</h3>
+          <p>Computer science, real Python, the maths behind machine learning. No shortcuts, because shortcuts show up later.</p>
+        </li>
+        <li class="reveal">
+          <span class="when">14</span>
+          <h3>Ship things people actually use</h3>
+          <p>Small, finished projects that leave my laptop. Finished beats clever.</p>
+        </li>
+        <li class="reveal">
+          <span class="when">15</span>
+          <h3>Build the idea nobody has built</h3>
+          <p>The one worth doing. By then I'll have the skills to attempt it instead of just describing it.</p>
+        </li>
+        <li class="reveal goal">
+          <span class="when">16</span>
+          <h3>$1,000,000 a year</h3>
+          <p>The number I'm aiming at. Everything above is how it gets there — the target is the easy part to write and the hard part to earn.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="band contact" id="contact">
+    <div class="halo soft" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="kicker reveal">05</span>
+      <h2 class="reveal">Let's talk</h2>
       <p class="big reveal">
         <!-- EDIT ME: replace with a real address -->
         <a href="mailto:hello@example.com">hello@example.com</a>
       </p>
       <ul class="social reveal">
+        <!-- EDIT ME: replace the # with real links, or delete the ones you don't use -->
         <li><a href="#" rel="me noopener">GitHub</a></li>
-        <li><a href="#" rel="me noopener">LinkedIn</a></li>
         <li><a href="#" rel="me noopener">Instagram</a></li>
+        <li><a href="#" rel="me noopener">YouTube</a></li>
       </ul>
     </div>
   </section>
@@ -125,6 +258,7 @@
 <footer>
   <div class="wrap">
     <p>&copy; <span id="year">2026</span> Irtaza Javed</p>
+    <p class="hala">Hala Madrid</p>
     <a href="#top">Back to top</a>
   </div>
 </footer>
