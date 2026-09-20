@@ -1,9 +1,10 @@
 # irtaza-website
 
-Portfolio site for **Irtaza Javed** — grade 8, centre-back, future AI engineer.
+Portfolio site for **Irtaza Javed** — grade 8, centre-back, teaching himself
+the computer science behind machine learning.
 
-Static: three files and two images. No framework, no build step, no
-dependencies. Real Madrid white and gold on near-black, Anton for display type.
+Static: three files and three images. No framework, no build step, no
+dependencies. One typeface (Inter), one accent, used sparingly.
 
 ```
 index.html          the page
@@ -38,8 +39,8 @@ Everything else is real content.
 ## The two renders are labelled, on purpose
 
 `images/pitch.*` and `images/engineer.*` are generated images, not
-photographs. Both carry a **The vision** badge, a caption saying they are
-rendered, and alt text that says the same thing.
+photographs. Both carry an **Illustration** badge, a caption saying
+"An illustration, not a photograph", and alt text that says the same.
 
 That is not decoration. The Bernabéu shot puts a real 13-year-old in a Real
 Madrid first-team kit on a stadium pitch, and an unlabelled copy on a public
@@ -49,14 +50,18 @@ restyle the page, keep the badge, the caption and the alt text.
 
 ## Changing it
 
-**Colours and spacing** are tokens at the top of `style.css`. `--gold` is the
-accent; `--bg`, `--white`, `--text` and `--muted` are the rest. Change them
-there and the whole page follows.
+**Colours and spacing** are tokens at the top of `style.css`. `--accent` is
+the warm off-gold; `--bg`, `--text`, `--muted` and the two `--line`s are the
+rest. Change them there and the whole page follows.
 
-**Adding a project** is one more `<li class="card reveal">` in the `#lab` list.
-**Adding a timeline step** is one more `<li class="reveal">` in `#plan` — add
-`class="reveal goal"` to make it the gold end-point. Both grids reflow on
-their own.
+**Keep the restraint.** An earlier pass had all-caps Anton headlines, a
+scrolling HALA MADRID marquee, an outlined gold surname, a huge watermark 7
+and a Ronaldo quote in a pull-out. It read as shouting. Size, space and one
+accent do the work now — adding any of that back undoes it.
+
+**Adding a project** is one more `<li class="card reveal">` in `#building`.
+**Adding a timeline step** is one more `<li class="reveal">` in `#plan`; the
+last one is filled automatically. Both reflow on their own.
 
 **Swapping the photo**: replace both files in `images/`, keeping a roughly 4:5
 portrait. Strip the metadata first — phone photos carry GPS coordinates, and
@@ -70,13 +75,10 @@ magick images/irtaza.jpg -quality 82 images/irtaza.webp
 
 ## Notes
 
-- **Motion**: the ticker, the scroll cue and the fade-ins all stop under
-  `prefers-reduced-motion`. The fade-in also shows everything at once when
+- **Motion**: the fade-ins stop under
+  `prefers-reduced-motion`, and show everything at once when
   `IntersectionObserver` is missing — the failure mode of getting that wrong
   is a blank page, so it fails toward visible.
-- **The ticker uses a per-item margin, not `gap`.** With `gap` the track is
-  `2 × copy + (n−1) × gap`, so the `-50%` loop lands half a gap off the seam
-  and visibly stutters once per cycle.
 - **`og:image` is a relative path.** Some link previews want an absolute URL —
   once this has a domain, make it `https://<domain>/images/irtaza.jpg`.
 
