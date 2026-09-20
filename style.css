@@ -6,6 +6,16 @@
    headline, and it read as shouting. Size and space do the work here.
    =========================================================================== */
 
+/* ---------------------------------------------------------------------------
+   Theme.
+
+   Dark is the base palette and lives on a bare `:root`, so every colour has a
+   definition that no media query or attribute can take away. Light is defined
+   twice: once for the system preference, guarded so an explicit choice beats
+   it, and once for that explicit choice. Without the `:not()` guard a visitor
+   on a light OS could not pick dark — the media query would keep winning.
+   --------------------------------------------------------------------------- */
+
 :root {
   --bg:     #0c0d0f;
   --bg-alt: #101215;
@@ -15,12 +25,44 @@
   --text:   #e7e8ea;
   --muted:  #8a9099;
   --accent: #c2a878;   /* warm off-gold; labels and hairlines only */
+  --wash:   color-mix(in srgb, var(--bg) 45%, transparent);
+  --grain:  0.022;
 
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --wrap: 72rem;
   --pad:  clamp(1.25rem, 5vw, 3.5rem);
   --band: clamp(4.5rem, 11vh, 8rem);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:     #faf9f7;
+    --bg-alt: #f2f0eb;
+    --raise:  #ffffff;
+    --line:   #e5e2db;
+    --line-2: #d2cec4;
+    --text:   #15171a;
+    --muted:  #5d636d;
+    --accent: #8a6a2f;   /* darkened: the dark-mode gold fails contrast on paper */
+    /* The photographs are dark. A page-coloured fade off the bottom of one
+       reads as a white smear on paper, so light mode has no wash. */
+    --wash:   transparent;
+    --grain:  0.014;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg:     #faf9f7;
+  --bg-alt: #f2f0eb;
+  --raise:  #ffffff;
+  --line:   #e5e2db;
+  --line-2: #d2cec4;
+  --text:   #15171a;
+  --muted:  #5d636d;
+  --accent: #8a6a2f;
+  --wash:   transparent;
+  --grain:  0.014;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -49,7 +91,7 @@ a { color: inherit; }
 
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 200;
-  background: var(--accent); color: #0c0d0f; padding: 0.75rem 1rem;
+  background: var(--accent); color: var(--bg); padding: 0.75rem 1rem;
 }
 .skip:focus { left: 0; }
 
@@ -57,7 +99,7 @@ a { color: inherit; }
    to read as a texture. */
 .grain {
   position: fixed; inset: 0; z-index: 150; pointer-events: none;
-  opacity: 0.022;
+  opacity: var(--grain);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -95,6 +137,35 @@ a { color: inherit; }
 }
 .nav .nav-cta:hover, .nav .nav-cta:focus-visible { border-color: var(--accent); color: var(--accent); }
 @media (max-width: 46rem) { .nav nav a:not(.nav-cta) { display: none; } }
+
+/* theme toggle */
+
+.theme {
+  display: grid; place-items: center;
+  width: 2rem; height: 2rem;
+  padding: 0; margin-left: 0.25rem;
+  background: transparent;
+  border: 1px solid var(--line-2); border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.theme:hover, .theme:focus-visible { color: var(--text); border-color: var(--accent); }
+.theme svg { width: 15px; height: 15px; display: block; }
+
+/* Dark is the base, so the button offers the sun. Each branch sets BOTH
+   icons — a rule that only hides one leaves both showing when the branches
+   stack. */
+.theme .i-moon { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .theme .i-sun  { display: none; }
+  :root:not([data-theme="dark"]) .theme .i-moon { display: block; }
+}
+:root[data-theme="light"] .theme .i-sun  { display: none; }
+:root[data-theme="light"] .theme .i-moon { display: block; }
+:root[data-theme="dark"]  .theme .i-sun  { display: block; }
+:root[data-theme="dark"]  .theme .i-moon { display: none; }
+
 
 /* -------------------------------- intro -------------------------------- */
 
@@ -138,7 +209,7 @@ h1 {
   display: inline-block;
   padding: 0.75rem 1.4rem;
   border: 1px solid var(--text); border-radius: 8px;
-  background: var(--text); color: #0c0d0f;
+  background: var(--text); color: var(--bg);
   font-size: 0.9375rem; font-weight: 500;
   text-decoration: none;
   transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
@@ -226,7 +297,7 @@ h2 {
   content: "";
   position: absolute; inset: 0;
   border-radius: 12px;
-  background: linear-gradient(180deg, transparent 62%, color-mix(in srgb, var(--bg) 45%, transparent) 100%);
+  background: linear-gradient(180deg, transparent 62%, var(--wash) 100%);
   pointer-events: none;
 }
 

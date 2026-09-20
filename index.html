@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Irtaza Javed</title>
 <meta name="description" content="Irtaza Javed — grade 8. Centre-back, and teaching myself the computer science behind machine learning.">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0c0d0f">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0c0d0f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
 
 <meta property="og:title" content="Irtaza Javed">
 <meta property="og:description" content="Grade 8. Centre-back, and teaching myself the computer science behind machine learning.">
@@ -20,6 +21,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<script>
+  // Inline and blocking on purpose: a stored theme has to be on <html> before
+  // the first paint, otherwise the page flashes the system theme first.
+  // Storage throws in some privacy modes, so a failure just falls through to
+  // the system preference.
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
 </head>
 <body>
 
@@ -34,6 +46,17 @@
     <a href="#building">Building</a>
     <a href="#plan">Plan</a>
     <a class="nav-cta" href="#contact">Contact</a>
+    <button class="theme" type="button" id="theme-toggle" aria-label="Switch theme">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2"></circle>
+        <path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"></path>
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"></path>
+      </svg>
+    </button>
   </nav>
 </header>
 

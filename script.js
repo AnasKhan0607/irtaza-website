@@ -15,6 +15,46 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  // ---- theme toggle -------------------------------------------------------
+  // The stored value is applied by the inline script in <head>, before paint.
+  // This only handles clicks and keeps the label describing the NEXT state.
+  var toggle = document.getElementById('theme-toggle');
+  if (toggle) {
+    var systemLight = window.matchMedia('(prefers-color-scheme: light)');
+
+    var current = function () {
+      var set = document.documentElement.dataset.theme;
+      if (set === 'light' || set === 'dark') return set;
+      return systemLight.matches ? 'light' : 'dark';
+    };
+
+    var label = function () {
+      toggle.setAttribute('aria-label',
+        current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    };
+
+    toggle.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      label();
+    });
+
+    // Follow the system while the visitor has not chosen for themselves.
+    var onSystem = function () {
+      var stored = null;
+      try { stored = localStorage.getItem('theme'); } catch (e) {}
+      if (stored !== 'light' && stored !== 'dark') {
+        delete document.documentElement.dataset.theme;
+        label();
+      }
+    };
+    if (systemLight.addEventListener) systemLight.addEventListener('change', onSystem);
+    else if (systemLight.addListener) systemLight.addListener(onSystem);
+
+    label();
+  }
+
   var reveals = document.querySelectorAll('.reveal');
 
   // No IntersectionObserver, or the visitor asked for less motion: show

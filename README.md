@@ -4,7 +4,8 @@ Portfolio site for **Irtaza Javed** — grade 8, centre-back, teaching himself
 the computer science behind machine learning.
 
 Static: three files and three images. No framework, no build step, no
-dependencies. One typeface (Inter), one accent, used sparingly.
+dependencies. One typeface (Inter), one accent, used sparingly. Dark and
+light, following the system setting, with a toggle that overrides it.
 
 ```
 index.html          the page
@@ -35,6 +36,36 @@ Search `index.html` for `EDIT ME`. Two things are placeholders:
   Replace the `href`s, or delete the `<li>`s you don't use.
 
 Everything else is real content.
+
+## Theming
+
+Dark is the base palette and sits on a bare `:root`, so every colour has a
+definition that no media query or attribute can remove. Light is defined
+twice — once under `prefers-color-scheme: light`, guarded with
+`:root:not([data-theme="dark"])`, and once under `:root[data-theme="light"]`.
+
+**The guard is load-bearing.** Without it a visitor on a light OS could not
+choose dark: the media query would keep winning over the attribute.
+
+The toggle writes `theme` to `localStorage` and sets `data-theme` on `<html>`.
+Two details that are easy to get wrong:
+
+- **An inline blocking script in `<head>` applies the stored value**, before
+  the stylesheet and `script.js` load. Without it the page paints the system
+  theme first and visibly flips.
+- **While nothing is stored, the page follows the system live** — the toggle
+  listens for `prefers-color-scheme` changes and clears the attribute.
+  Storage access is wrapped in `try`/`catch`; it throws in some privacy modes,
+  and the fallback is simply the system preference.
+
+Two tokens exist only to differ between themes: `--wash` (the fade off the
+bottom of a photograph, `transparent` in light — the images are dark, and a
+page-coloured fade reads as a white smear on paper) and `--grain`.
+
+Contrast was measured, not eyeballed: the light accent is `#8a6a2f` at 4.76:1
+on the page background and `--muted` is 5.75:1, both AA for body text. The
+dark-mode gold fails on paper, which is why it is a different value rather
+than the same one.
 
 ## The two renders are labelled, on purpose
 
