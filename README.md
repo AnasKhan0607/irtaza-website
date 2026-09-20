@@ -39,33 +39,56 @@ Everything else is real content.
 
 ## Theming
 
-Dark is the base palette and sits on a bare `:root`, so every colour has a
-definition that no media query or attribute can remove. Light is defined
-twice — once under `prefers-color-scheme: light`, guarded with
-`:root:not([data-theme="dark"])`, and once under `:root[data-theme="light"]`.
+`data-theme` on `<html>` is the single source of truth and is **always**
+present — `"dark"` or `"light"`, never absent. An inline script in `<head>`
+resolves it before first paint from `localStorage`, falling back to the system
+preference, so the page never flashes the wrong theme. The stylesheet then
+matches two plain attribute selectors and nothing clever.
 
-**The guard is load-bearing.** Without it a visitor on a light OS could not
-choose dark: the media query would keep winning over the attribute.
+The dark tokens are *also* on a bare `:root`, so a full palette survives that
+script never running; the `prefers-color-scheme` block is scoped to
+`:root:not([data-theme])` and is the no-JS path only.
 
-The toggle writes `theme` to `localStorage` and sets `data-theme` on `<html>`.
-Two details that are easy to get wrong:
+**This replaced a version that did not work reliably.** Light used to live
+inside a media query guarded by `:root:not([data-theme="dark"])`, with the
+attribute absent meaning "follow the system". It was hard to reason about, and
+the control was a 15px unlabelled circle almost nobody found. The toggle is now
+a labelled pill naming the theme it switches *to*.
 
-- **An inline blocking script in `<head>` applies the stored value**, before
-  the stylesheet and `script.js` load. Without it the page paints the system
-  theme first and visibly flips.
-- **While nothing is stored, the page follows the system live** — the toggle
-  listens for `prefers-color-scheme` changes and clears the attribute.
-  Storage access is wrapped in `try`/`catch`; it throws in some privacy modes,
-  and the fallback is simply the system preference.
+**There is no transition on the page background.** A cross-fade there makes the
+switch feel like it half-worked on a slow device, and it hides a real failure
+behind an animation.
 
-Two tokens exist only to differ between themes: `--wash` (the fade off the
-bottom of a photograph, `transparent` in light — the images are dark, and a
-page-coloured fade reads as a white smear on paper) and `--grain`.
+## Interaction
 
-Contrast was measured, not eyeballed: the light accent is `#8a6a2f` at 4.76:1
-on the page background and `--muted` is 5.75:1, both AA for body text. The
-dark-mode gold fails on paper, which is why it is a different value rather
-than the same one.
+All of it is optional: the page is complete and readable with `script.js`
+removed, and every behaviour is skipped under `prefers-reduced-motion` or on a
+touch-only pointer where it would misfire.
+
+| Thing | How |
+|---|---|
+| The slab | A real box in CSS 3D — two faces and four side panels. Drag to spin, momentum on release, then a slow idle rotation. |
+| Horizontal rail | The plan section pins and its track translates with scroll progress. |
+| Spotlight | Panels track the pointer and paint a radial gradient from `--mx`/`--my`. |
+| Tilt | Pointer-driven `rotateX`/`rotateY` on the portrait and panels. |
+| Magnetic | Buttons and the email drift toward the cursor. |
+| Word reveal | Headlines are split into words that wipe up on scroll. |
+
+Three things worth knowing before changing any of it:
+
+- **The slab is sized from `--cw`/`--ch`/`--cd`**, so every `translateZ` is a
+  `calc()` off the same numbers. No JS measuring, correct at every width.
+  Change the size in one place.
+- **`.stop` width has a `vw` term on purpose.** At a fixed rem width the track
+  is barely wider than a large monitor, so the rail travelled ~200px over three
+  screens of scrolling and read as broken.
+- **The scroll handler's rAF guard has a timeout release.** The usual
+  `if (ticking) return` pattern wedges permanently if that frame never runs.
+- **Word-wipe spans clip descenders.** `overflow: hidden` is what makes it a
+  wipe; the clip box is extended with `padding-bottom` and pulled back with a
+  matching negative margin.
+
+`railOffset()` in `script.js` is pure and has a Node test — see the commit.
 
 ## The two renders are labelled, on purpose
 

@@ -6,8 +6,8 @@
 <title>Irtaza Javed</title>
 <meta name="description" content="Irtaza Javed — grade 8. Centre-back, and teaching myself the computer science behind machine learning.">
 <meta name="color-scheme" content="dark light">
-<meta name="theme-color" content="#0c0d0f" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 
 <meta property="og:title" content="Irtaza Javed">
 <meta property="og:description" content="Grade 8. Centre-back, and teaching myself the computer science behind machine learning.">
@@ -15,70 +15,72 @@
 <meta property="og:type" content="profile">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23151719'/><text x='16' y='22' font-family='Helvetica,Arial,sans-serif' font-size='15' font-weight='600' text-anchor='middle' fill='%23c2a878'>IJ</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23141518'/><text x='16' y='22' font-family='Helvetica,Arial,sans-serif' font-size='15' font-weight='600' text-anchor='middle' fill='%23c9a96b'>IJ</text></svg>">
+
+<script>
+  /* Theme, applied before first paint.
+
+     `data-theme` on <html> is the single source of truth and it is ALWAYS
+     set — to "dark" or "light", never absent. An earlier version left it
+     absent to mean "follow the system" and leaned on a
+     :root:not([data-theme="dark"]) guard inside a media query; it was hard
+     to reason about and it did not work for everyone. This version resolves
+     the system preference here, in one place, and the stylesheet only ever
+     matches two plain attribute selectors. */
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem('theme'); } catch (e) {}
+    var theme = (stored === 'light' || stored === 'dark') ? stored
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-theme-source', stored ? 'user' : 'system');
+  })();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
-<script>
-  // Inline and blocking on purpose: a stored theme has to be on <html> before
-  // the first paint, otherwise the page flashes the system theme first.
-  // Storage throws in some privacy modes, so a failure just falls through to
-  // the system preference.
-  try {
-    var t = localStorage.getItem('theme');
-    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
-  } catch (e) {}
-</script>
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
 
 <header class="nav" id="top">
   <a class="mark" href="#top">Irtaza Javed</a>
   <nav aria-label="Primary">
     <a href="#about">About</a>
-    <a href="#football">Football</a>
-    <a href="#building">Building</a>
+    <a href="#two">Two games</a>
+    <a href="#work">What I do</a>
     <a href="#plan">Plan</a>
-    <a class="nav-cta" href="#contact">Contact</a>
-    <button class="theme" type="button" id="theme-toggle" aria-label="Switch theme">
-      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="4.2"></circle>
-        <path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"></path>
-      </svg>
-      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z"></path>
-      </svg>
+    <button class="theme" type="button" id="theme-toggle">
+      <span class="theme-dot" aria-hidden="true"></span>
+      <span class="theme-txt" id="theme-txt">Light</span>
     </button>
   </nav>
 </header>
 
 <main id="main">
 
-  <!-- ================= INTRO ================= -->
-  <section class="intro">
-    <div class="wrap intro-grid">
-      <div class="intro-copy">
-        <p class="eyebrow reveal">Grade 8 · Centre-back · Learning to build with AI</p>
-        <h1 class="reveal">Irtaza Javed</h1>
-        <p class="lede reveal">
+  <!-- ============================ HERO ============================ -->
+  <section class="hero spot" data-spot>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow up">Grade 8 · Centre-back · Learning to build with AI</p>
+        <h1 data-split>Irtaza Javed</h1>
+        <p class="lede up">
           I'm 13. I play at the back, and I spend the rest of my time teaching
           myself the computer science that machine learning actually runs on.
         </p>
-        <div class="cta reveal">
-          <a class="btn" href="#building">What I'm building</a>
-          <a class="btn ghost" href="#contact">Get in touch</a>
+        <div class="cta up">
+          <a class="btn mag" href="#work">What I do</a>
+          <a class="btn ghost mag" href="#contact">Get in touch</a>
         </div>
       </div>
 
-      <figure class="portrait reveal">
+      <figure class="portrait tilt up" data-tilt data-depth>
         <picture>
           <source srcset="images/irtaza.webp" type="image/webp">
           <img src="images/irtaza.jpg" width="900" height="1125"
@@ -86,55 +88,85 @@
         </picture>
       </figure>
     </div>
+
+    <a class="cue" href="#about" aria-label="Scroll down"><span aria-hidden="true"></span></a>
   </section>
 
-  <!-- ================= ABOUT ================= -->
+  <!-- ============================ ABOUT ============================ -->
   <section class="band" id="about">
-    <div class="wrap two">
-      <div class="side reveal">
-        <span class="kicker">01 — About</span>
-      </div>
-      <div class="prose reveal">
-        <h2>Most of what I know, I taught myself.</h2>
-        <p>
+    <div class="wrap">
+      <span class="kicker up">01 — About</span>
+      <h2 class="statement" data-split>Most of what I know, I taught myself.</h2>
+      <div class="two">
+        <p class="up">
           Python first, and now the maths underneath it. Computer science is the
           subject I keep coming back to on my own time — it's the only one where
           you can have an idea at night and have it working by morning.
         </p>
-        <p>
+        <p class="up">
           The rest of my time goes to football. I play at the back, which is a
           job that mostly gets noticed when it goes wrong, and that suits me.
         </p>
-        <ul class="tags">
-          <li>Python</li>
-          <li>Machine learning</li>
-          <li>Web</li>
-          <li>Football</li>
-        </ul>
+      </div>
+      <ul class="tags up">
+        <li>Python</li><li>Machine learning</li><li>Web</li><li>Football</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================== TWO GAMES ========================== -->
+  <section class="band alt slab-band" id="two">
+    <div class="wrap slab-grid">
+      <div class="slab-copy">
+        <span class="kicker up">02 — Two games</span>
+        <h2 class="up">One of them I've played since I could walk. The other I found on my own.</h2>
+        <p class="up">
+          They ask for the same thing: read what's about to happen, and be
+          standing where it lands.
+        </p>
+        <p class="hint up" id="slab-hint">
+          <span class="grip" aria-hidden="true"></span> Drag the panel to turn it over
+        </p>
+      </div>
+
+      <div class="stage up">
+        <div class="slab" id="slab" role="img"
+             aria-label="A rotating panel. One face shows Irtaza in a Real Madrid kit, the other at a workstation training a model. Both are illustrations, not photographs.">
+          <div class="face front">
+            <picture>
+              <source srcset="images/pitch.webp" type="image/webp">
+              <img src="images/pitch.jpg" width="1000" height="1250" loading="lazy" decoding="async" alt="">
+            </picture>
+            <span class="face-tag">Illustration</span>
+            <span class="face-name">The pitch</span>
+          </div>
+          <div class="face back">
+            <picture>
+              <source srcset="images/engineer.webp" type="image/webp">
+              <img src="images/engineer.jpg" width="1000" height="1250" loading="lazy" decoding="async" alt="">
+            </picture>
+            <span class="face-tag">Illustration</span>
+            <span class="face-name">The desk</span>
+          </div>
+          <div class="edge left"></div>
+          <div class="edge right"></div>
+          <div class="edge top"></div>
+          <div class="edge bottom"></div>
+        </div>
+        <p class="stage-note">Both faces are illustrations, not photographs.</p>
       </div>
     </div>
   </section>
 
-  <!-- ================= FOOTBALL ================= -->
-  <section class="band alt" id="football">
+  <!-- =========================== WHAT I DO =========================== -->
+  <section class="band" id="work">
     <div class="wrap">
-      <div class="head reveal">
-        <span class="kicker">02 — Football</span>
-        <h2>Defending is a decision you make before the ball arrives.</h2>
-      </div>
+      <span class="kicker up">03 — What I do</span>
+      <h2 class="up">On the pitch, and at the desk.</h2>
 
-      <div class="feature">
-        <figure class="shot reveal">
-          <span class="tag">Illustration</span>
-          <picture>
-            <source srcset="images/pitch.webp" type="image/webp">
-            <img src="images/pitch.jpg" width="1000" height="1250" loading="lazy" decoding="async"
-                 alt="Irtaza Javed in a Real Madrid kit, defending. An illustration, not a photograph.">
-          </picture>
-          <figcaption>An illustration, not a photograph.</figcaption>
-        </figure>
-
-        <div class="detail reveal">
+      <div class="panels">
+        <article class="panel spot tilt up" data-spot data-tilt>
+          <h3>Football</h3>
           <dl class="spec">
             <div><dt>Position</dt><dd>Centre-back</dd></div>
             <div><dt>Club I support</dt><dd>Real Madrid</dd></div>
@@ -142,113 +174,77 @@
           </dl>
           <p>
             Centre-back is a reading job before it's a physical one. Most of the
-            work happens in the two seconds before a pass is played — where the
-            striker is going, and getting there first.
+            work happens in the two seconds before a pass is played.
           </p>
-        </div>
+        </article>
+
+        <article class="panel spot tilt up" data-spot data-tilt>
+          <h3>Building</h3>
+          <ul class="mini">
+            <li>
+              <strong>Learning to build models</strong>
+              <span>Python, then the maths underneath it — why a model works, not only how to call one.</span>
+            </li>
+            <li>
+              <strong>This site</strong>
+              <span>Hand-written HTML, CSS and JavaScript. No framework, no page builder.</span>
+            </li>
+            <li>
+              <strong>Something that doesn't exist yet</strong>
+              <span>The actual goal. I'd rather build the thing that isn't there.</span>
+            </li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- ================= BUILDING ================= -->
-  <section class="band" id="building">
-    <div class="wrap">
-      <div class="head reveal">
-        <span class="kicker">03 — Building</span>
-        <h2>What I'm working on.</h2>
-      </div>
-
-      <div class="feature rev">
-        <ul class="cards">
-          <li class="card reveal">
-            <h3>Learning to build models</h3>
-            <p>
-              Python, then the maths underneath it. I want to understand why a
-              model works rather than only call something that already does.
-            </p>
-            <p class="meta">Python · Neural networks · In progress</p>
-          </li>
-          <li class="card reveal">
-            <h3>This site</h3>
-            <p>
-              Hand-written HTML and CSS. No framework and no page builder —
-              you're looking at it.
-            </p>
-            <p class="meta">HTML · CSS · JavaScript</p>
-          </li>
-          <li class="card reveal">
-            <h3>Something that doesn't exist yet</h3>
-            <p>
-              The actual goal. I'd rather build the thing that isn't there than
-              rebuild something that is, with a nicer interface on it.
-            </p>
-            <p class="meta">Not started</p>
-          </li>
-        </ul>
-
-        <figure class="shot reveal">
-          <span class="tag">Illustration</span>
-          <picture>
-            <source srcset="images/engineer.webp" type="image/webp">
-            <img src="images/engineer.jpg" width="1000" height="1250" loading="lazy" decoding="async"
-                 alt="Irtaza Javed at a multi-monitor workstation training a model. An illustration, not a photograph.">
-          </picture>
-          <figcaption>An illustration, not a photograph.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PLAN ================= -->
-  <section class="band alt" id="plan">
-    <div class="wrap">
-      <div class="head reveal">
+  <!-- ============================= PLAN ============================= -->
+  <section class="rail" id="plan">
+    <div class="rail-pin">
+      <div class="wrap rail-head">
         <span class="kicker">04 — Plan</span>
         <h2>Written down, so it's a target instead of a daydream.</h2>
       </div>
-
-      <ol class="timeline">
-        <li class="reveal">
-          <span class="when">Now, 13</span>
+      <div class="rail-track" id="rail-track">
+        <article class="stop">
+          <span class="age">Now, 13</span>
           <h3>Learn the fundamentals properly</h3>
           <p>Computer science, real Python, and the maths behind machine learning. Shortcuts here show up later.</p>
-        </li>
-        <li class="reveal">
-          <span class="when">14</span>
+        </article>
+        <article class="stop">
+          <span class="age">14</span>
           <h3>Ship things people actually use</h3>
           <p>Small, finished projects that leave my laptop. Finished beats clever.</p>
-        </li>
-        <li class="reveal">
-          <span class="when">15</span>
+        </article>
+        <article class="stop">
+          <span class="age">15</span>
           <h3>Attempt the hard one</h3>
           <p>By then I should have enough to build the idea instead of only describing it.</p>
-        </li>
-        <li class="reveal">
-          <span class="when">16</span>
+        </article>
+        <article class="stop last">
+          <span class="age">16</span>
           <h3>Earn a living from what I build</h3>
           <p>The number I've written down is a million a year. The three steps above are the work that would have to make it a consequence rather than a wish.</p>
-        </li>
-      </ol>
+        </article>
+      </div>
+      <div class="rail-progress" aria-hidden="true"><i id="rail-bar"></i></div>
     </div>
   </section>
 
-  <!-- ================= CONTACT ================= -->
-  <section class="band" id="contact">
-    <div class="wrap two">
-      <div class="side reveal">
-        <span class="kicker">05 — Contact</span>
-      </div>
-      <div class="reveal">
-        <p class="big">
-          <!-- EDIT ME: replace with a real address -->
-          <a href="mailto:hello@example.com">hello@example.com</a>
-        </p>
-        <ul class="social">
-          <!-- EDIT ME: replace the # with real links, or delete the ones you don't use -->
-          <li><a href="#" rel="me noopener">GitHub</a></li>
-          <li><a href="#" rel="me noopener">Instagram</a></li>
-        </ul>
-      </div>
+  <!-- =========================== CONTACT =========================== -->
+  <section class="band alt" id="contact">
+    <div class="wrap">
+      <span class="kicker up">05 — Contact</span>
+      <p class="big up">
+        <!-- EDIT ME: replace with a real address -->
+        <a class="mag" href="mailto:hello@example.com">hello@example.com</a>
+      </p>
+      <ul class="social up">
+        <!-- EDIT ME: replace the # with real links, or delete the ones you don't use -->
+        <li><a href="#" rel="me noopener">GitHub</a></li>
+        <li><a href="#" rel="me noopener">Instagram</a></li>
+      </ul>
     </div>
   </section>
 
